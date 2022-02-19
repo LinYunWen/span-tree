@@ -43,10 +43,22 @@ class App extends Component {
     this.setReloading = (reloading) => {
       this.setState({ reloading });
     };
+    this.isSearchUrl = (url) => {
+      return url.startsWith("https://gitlab.com/search");
+    };
+    this.hasGroupIdAndProjectId = (url) => {
+      const urlObj = new URL(url);
+      return urlObj.searchParams.has("group_id") && urlObj.searchParams.has("project_id");
+    };
     this.shouldShowSpanTree = () => {
+      let url = window.location.href;
       return (
-        document.querySelector(".qa-branches-select") !== null &&
-        document.querySelector(".nav-sidebar") !== null
+        (
+          this.isSearchUrl(url) && this.hasGroupIdAndProjectId(url)
+        ) || (
+          document.querySelector(".qa-branches-select") !== null &&
+          document.querySelector(".nav-sidebar") !== null
+        )
       );
     };
     this.setShowSearchbar = (showSearchbar) => {

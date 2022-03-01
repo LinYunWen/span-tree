@@ -44,7 +44,10 @@ class App extends Component {
       this.setState({ reloading });
     };
     this.isSearchUrl = (url) => {
-      return url.startsWith("https://gitlab.com/search");
+      return (
+        url.startsWith("https://gitlab.com/search") ||
+        url.startsWith("https://git.synology.inc/search")
+      );
     };
     this.hasGroupIdAndProjectId = (url) => {
       const urlObj = new URL(url);
